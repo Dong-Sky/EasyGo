@@ -68,7 +68,104 @@ class welcome extends Component {
         }}>
           Let's go!
         </Text>
+        <Text onPress={() => console.log(params)}>
+          letsup
+        </Text>
       </View>
+    );
+  }
+}
+//定义登录页
+class login extends Component{
+  constructor(props) {
+      super(props);
+      this.state = {
+            username: 'songsj125@gmail.com',//songsj125@gmail.com
+            password: '1111',//1111
+            token: null,
+            uid: null,
+      }
+    }
+  //定义登录跳转方法
+  render(){
+    const { navigate } = this.props.navigation;
+    const { params } = this.props.navigation.state;
+    /*const goMain = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'main',
+          params:{
+            usr: {
+              token:this.state.token,
+              uid:this.state.uid,
+            }
+          },
+      }),
+      ]
+    })*/
+    return(
+        <View style={styles.container}>
+            <TextInput
+            style={{height: 40,width:200, borderColor: 'gray', borderWidth: 1,alignSelf:'center'}}
+            onChangeText={(username) => this.setState({username})}
+            value={this.state.username}
+            autoCapitalize = 'none'
+          />
+            <TextInput
+            style={{height: 40,width:200, borderColor: 'gray', borderWidth: 1,alignSelf:'center'}}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            autoCapitalize = 'none'
+          />
+           <Text style={styles.instructions} onPress={() => util.postRequest(
+             service.BaseUrl,
+             'a=oauth&v=1.0.0&username='+this.state.username+'&password='+this.state.password,
+             function(response){
+               console.log(response);
+               if(!response.status){
+                 DeviceStorage.save(user.token,response.data.token)
+                 .then(DeviceStorage.save(user.uid,response.data.uid))
+                 .then(this.setState({
+                   token:response.data.token,
+                   uid:response.data.uid,
+                 }))
+                 .then(this.props.navigation.dispatch(NavigationActions.reset({
+                   index: 0,
+                   actions: [
+                     NavigationActions.navigate({
+                       routeName: 'main',
+                       params:{
+                         usr: {
+                           token:this.state.token,
+                           uid:this.state.uid,
+                         }
+                       },
+                   }),
+                   ]
+                 })))
+               }
+               else{alert(response.err);}
+             }.bind(this),
+             function(err){
+               console.log(err);}.bind(this),
+           )}>
+             登录
+           </Text>
+           <Text onPress={() => {
+             console.log(DeviceStorage.get(user.token));
+             console.log(DeviceStorage.get(user.uid));
+              }
+            }>
+             获取
+           </Text>
+           <Text onPress={() => console.log(this.state)}>
+             input
+           </Text>
+           <Text onPress={() => this.props.navigation.dispatch(goMain)}>
+             gogogo!
+           </Text>
+         </View>
     );
   }
 }
@@ -174,6 +271,8 @@ const main = TabNavigator({
 const imarket = StackNavigator({
   welcome: { screen: welcome },
   main: { screen: main },
+  account: { screen: account },
+  login:{ screen: login },
 }, {
     initialRouteName: 'welcome', // 默认显示界面
     navigationOptions: {  // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)
@@ -202,7 +301,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor: '#FBE994',
+        backgroundColor: '#e1e8e2',
     },
     backgroundImage:{
    flex:1,

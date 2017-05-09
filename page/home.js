@@ -53,7 +53,7 @@ class home1 extends Component {
               <Text style={styles.instructions} onPress={() => navigate('itemlist',{usr:params.usr})}>
                 go to list !
               </Text>
-              <Text style={styles.instructions}>
+              <Text style={styles.instructions} onPress={() => console.log(params)}>
                   print information
               </Text>
             </View>
@@ -121,7 +121,7 @@ class itemlist extends Component{
 }
 
 
-const home = StackNavigator({
+  const home = StackNavigator({
   home1: {screen: home1},
   itemlist: {screen: itemlist},
 },{

@@ -16,6 +16,7 @@ import {
   TabNavigator,
   DrawerNavigator,
   NavigationActions,
+  StackRouter,
 } from 'react-navigation';
 import service from '../common/service.js';
 import util from '../common/util.js';
@@ -94,7 +95,7 @@ class account1 extends Component {
       }}>
       loginOut
     </Text>;
-    var loginin = <Text style={styles.welcome} onPress={() => this.props.navigation.dispatch(goLogin)}>
+    var loginin = <Text style={styles.welcome} onPress={() => navigate('login')}>
       loginIN
     </Text>;
     var islogin = <Text style={styles.welcome} onPress={() => console.log(params)}>您已经登录</Text>;
@@ -110,7 +111,7 @@ class account1 extends Component {
            </View>
            <View style={styles.order}>
              <View style={{flex:1,borderWidth:1,borderColor:'#e1e8e2'}}>
-               <Text onPress={() => console.log(params.usr)}>
+               <Text onPress={() => console.log(params)}>
                  information
                </Text>
              </View>
@@ -131,8 +132,7 @@ class account1 extends Component {
    );
  }
 }
-
-class login extends Component{
+/*class login extends Component{
   constructor(props) {
       super(props);
       this.state = {
@@ -217,11 +217,18 @@ class login extends Component{
          </View>
     );
   }
-}
+}*/
 
-const account = StackNavigator({
+  /*const account = StackRouter({
+  account1: { screen: account1 },
+}, {
+  initialRouteName: 'account1',
+})*/
+
+
+
+  const account = StackNavigator({
   account1: {screen: account1 },
-  login: { screen: login },
 },{
     initialRouteName: 'account1', // 默认显示界面
     navigationOptions: {  // 屏幕导航的默认选项, 也可以在组件内用 static navigationOptions 设置(会覆盖此处的设置)

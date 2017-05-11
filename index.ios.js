@@ -68,7 +68,7 @@ class welcome extends Component {
         }}>
           Let's go!
         </Text>
-        <Text onPress={() => console.log(params)}>
+        <Text onPress={() => console.log('......!!')}>
           letsup
         </Text>
       </View>
@@ -81,7 +81,7 @@ class login extends Component{
       super(props);
       this.state = {
             username: 'songsj125@gmail.com',//songsj125@gmail.com
-            password: '1111',//1111
+            password: '11111111',//1111
             token: null,
             uid: null,
       }
@@ -106,18 +106,21 @@ class login extends Component{
     })*/
     return(
         <View style={styles.container}>
+          {/*用户名*/}
             <TextInput
             style={{height: 40,width:200, borderColor: 'gray', borderWidth: 1,alignSelf:'center'}}
             onChangeText={(username) => this.setState({username})}
             value={this.state.username}
             autoCapitalize = 'none'
           />
+          {/*密码*/}
             <TextInput
             style={{height: 40,width:200, borderColor: 'gray', borderWidth: 1,alignSelf:'center'}}
             onChangeText={(password) => this.setState({password})}
             value={this.state.password}
             autoCapitalize = 'none'
           />
+          {/*登录*/}
            <Text style={styles.instructions} onPress={() => util.postRequest(
              service.BaseUrl,
              'a=oauth&v=1.0.0&username='+this.state.username+'&password='+this.state.password,
@@ -144,8 +147,9 @@ class login extends Component{
                    }),
                    ]
                  })))
+               } else { 
+                 alert(response.err);
                }
-               else{alert(response.err);}
              }.bind(this),
              function(err){
                console.log(err);}.bind(this),
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
    alignItems:'center',
    justifyContent:'center',
    width:null,
-   width:null,
+  //  width:null,
    //不加这句，就是按照屏幕高度自适应
    //加上这几，就是按照屏幕自适应
    //resizeMode:Image.resizeMode.contain,
